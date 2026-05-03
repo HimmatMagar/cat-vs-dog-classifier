@@ -1,0 +1,7 @@
+torch
+mlflow
+dvc
+dagshub
+fastapi
+pydantic
+uvicorn
