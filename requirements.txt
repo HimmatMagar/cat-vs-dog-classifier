@@ -5,3 +5,9 @@ dagshub
 fastapi
 pydantic
 uvicorn
+notebook
+torchvision
+gdown
+python-box
+ensure
+pyYAML
