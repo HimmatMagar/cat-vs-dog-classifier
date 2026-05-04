@@ -8,3 +8,10 @@ class DataIngestionConfig:
       data_path: str
       zip_file: Path
       unzip_file: Path
+
+
+@dataclass(frozen=True)
+class ModelBuildingConfig:
+      root_dir: Path
+      train_data_file: Path
+      model: str

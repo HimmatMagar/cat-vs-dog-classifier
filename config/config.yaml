@@ -5,3 +5,9 @@ data_ingestion:
   data_path: "https://drive.google.com/uc?export=download&id=10GYovcJ9ga6cdQSKLXNFCOBhewZqWwYB"
   zip_file: artifact/data_ingestion/data.zip
   unzip_file: artifact/data_ingestion
+
+
+model_building:
+  root_dir: artifact/model
+  train_data_file: artifact/data_ingestion/train
+  model: model.pth
