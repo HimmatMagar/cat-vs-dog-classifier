@@ -2,12 +2,12 @@ artifact_root: artifact
 
 data_ingestion:
   root_dir: artifact/data_ingestion
-  data_path: "https://drive.google.com/uc?export=download&id=10GYovcJ9ga6cdQSKLXNFCOBhewZqWwYB"
+  data_path: "https://drive.google.com/uc?export=download&id=147IhjG7DT8hIW-PqwxNju81SZ6vAbKe4"
   zip_file: artifact/data_ingestion/data.zip
   unzip_file: artifact/data_ingestion
 
 
 model_building:
   root_dir: artifact/model
-  train_data_file: artifact/data_ingestion/train
+  train_data_file: artifact/data_ingestion/archive/train
   model: model.pth

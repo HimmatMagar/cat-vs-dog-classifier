@@ -6,9 +6,8 @@ from Classifier.entity import *
 
 class ConfigurationManager:
 
-      def __init__(self, config = config, params = params):
+      def __init__(self, config = config):
             self.config = read_yaml(config)
-            self.params = read_yaml(params)
             
             create_dir([self.config.artifact_root])
 
