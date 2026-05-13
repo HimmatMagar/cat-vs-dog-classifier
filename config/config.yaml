@@ -10,3 +10,10 @@ model_building:
   root_dir: artifact/model
   train_data_file: artifact/data_ingestion/cat-vs-dog/dataset/train
   model: model.pth
+
+
+model_evaluation:
+  root_dir: artifact/model_eval
+  test_data_file: artifact/data_ingestion/cat-vs-dog/dataset/test
+  model: artifact/model/model.pth
+  metrices: model_evaluation/metric.json

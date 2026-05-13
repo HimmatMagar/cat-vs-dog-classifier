@@ -32,3 +32,15 @@ class ConfigurationManager:
                   train_data_file = config.train_data_file,
                   model = config.model
             )
+      
+
+      def get_model_eval_config(self) -> ModelEvalConfig:
+            config = self.config.model_evaluation
+            create_dir([config.root_dir])
+
+            return ModelEvalConfig(
+                  root_dir=config.root_dir,
+                  test_data_file=config.test_data_file,
+                  model=config.model,
+                  metrices=config.metrices
+            )
