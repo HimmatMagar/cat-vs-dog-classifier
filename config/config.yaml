@@ -8,5 +8,5 @@ data_ingestion:
 
 model_building:
   root_dir: artifact/model
-  train_data_file: artifact/data_ingestion/archive/train
+  train_data_file: artifact/data_ingestion/cat-vs-dog/dataset/train
   model: model.pth

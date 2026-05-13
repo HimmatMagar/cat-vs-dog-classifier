@@ -35,4 +35,5 @@ class CNeuralNetwork(nn.Module):
 
       def forward(self, x):
             X = self.features(x)
-            return self.fc(X)
+            output = self.fc(X)
+            return output
