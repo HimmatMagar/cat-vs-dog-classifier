@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+      <title>PetVision: Cat or Dog AI Predictor</title>
+      <style>
+            * {
+                  box-sizing: border-box;
+                  margin: 0;
+                  padding: 0;
+            }
+
+            body {
+                  background: linear-gradient(145deg, #f9f3e6 0%, #ffe6d5 100%);
+                  font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', sans-serif;
+                  min-height: 100vh;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  padding: 1.5rem;
+            }
+
+            .glass-card {
+                  max-width: 680px;
+                  width: 100%;
+                  background: rgba(255, 255, 255, 0.92);
+                  backdrop-filter: blur(2px);
+                  border-radius: 3rem;
+                  box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.05);
+                  padding: 2rem 2rem 2.5rem;
+                  transition: all 0.2s ease;
+                  border: 1px solid rgba(255, 245, 235, 0.8);
+            }
+
+            h1 {
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  font-size: 1.9rem;
+                  font-weight: 700;
+                  color: #3b2c1f;
+                  letter-spacing: -0.3px;
+                  margin-bottom: 0.3rem;
+            }
+
+            h1 span {
+                  background: #f4c9a3;
+                  padding: 0.2rem 0.7rem;
+                  border-radius: 60px;
+                  font-size: 1.2rem;
+                  font-weight: 600;
+                  color: #5a3e2b;
+            }
+
+            .subhead {
+                  color: #6b4e34;
+                  margin-bottom: 2rem;
+                  border-left: 4px solid #e2a46b;
+                  padding-left: 14px;
+                  font-weight: 500;
+                  font-size: 1rem;
+            }
+
+            .upload-area {
+                  background: #fffef7;
+                  border-radius: 2rem;
+                  border: 2px dashed #deb887;
+                  padding: 2rem 1.5rem;
+                  text-align: center;
+                  cursor: pointer;
+                  transition: 0.2s background, 0.2s border-color;
+                  margin-bottom: 1.5rem;
+            }
+
+            .upload-area:hover {
+                  background: #fff5ea;
+                  border-color: #c97e3a;
+            }
+
+            .upload-icon {
+                  font-size: 3.6rem;
+                  margin-bottom: 0.6rem;
+            }
+
+            .upload-text {
+                  font-weight: 600;
+                  color: #8b694a;
+                  margin-bottom: 0.4rem;
+                  font-size: 1.2rem;
+            }
+
+            .upload-hint {
+                  font-size: 0.8rem;
+                  color: #a8825c;
+            }
+
+            #fileInput {
+                  display: none;
+            }
+
+            .preview-container {
+                  display: flex;
+                  justify-content: center;
+                  margin: 1rem 0 1.2rem;
+            }
+
+            .image-preview {
+                  max-width: 280px;
+                  max-height: 280px;
+                  border-radius: 28px;
+                  box-shadow: 0 12px 22px -8px rgba(0, 0, 0, 0.2);
+                  object-fit: cover;
+                  border: 3px solid #fff2e4;
+                  background: #f2e3d4;
+                  transition: 0.2s;
+            }
+
+            .placeholder-preview {
+                  width: 200px;
+                  height: 200px;
+                  background: #ede0d4;
+                  border-radius: 28px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #b48c63;
+                  font-weight: 500;
+                  font-size: 0.9rem;
+                  text-align: center;
+                  flex-direction: column;
+                  gap: 6px;
+                  box-shadow: inset 0 0 0 1px #f0e1cf, 0 4px 12px rgba(0, 0, 0, 0.05);
+            }
+
+            .predict-btn {
+                  background: #f3b27a;
+                  border: none;
+                  width: 100%;
+                  padding: 1rem;
+                  font-size: 1.2rem;
+                  font-weight: 700;
+                  color: #2f241b;
+                  border-radius: 50px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 12px;
+                  cursor: pointer;
+                  transition: 0.2s transform, 0.2s background;
+                  box-shadow: 0 6px 0 #aa6f3e;
+                  margin: 0.8rem 0 1.2rem;
+            }
+
+            .predict-btn:active {
+                  transform: translateY(2px);
+                  box-shadow: 0 3px 0 #aa6f3e;
+            }
+
+            .predict-btn:disabled {
+                  background: #cdb39b;
+                  box-shadow: 0 6px 0 #9b7a5a;
+                  cursor: not-allowed;
+                  transform: none;
+                  opacity: 0.7;
+            }
+
+            .result-card {
+                  background: #ffffffd9;
+                  border-radius: 1.8rem;
+                  padding: 1.2rem 1.5rem;
+                  margin-top: 1rem;
+                  text-align: center;
+                  backdrop-filter: blur(4px);
+                  transition: all 0.2s;
+                  border: 1px solid #ffebdd;
+            }
+
+            .result-badge {
+                  font-size: 2rem;
+                  font-weight: 800;
+                  letter-spacing: -0.5px;
+                  display: flex;
+                  align-items: baseline;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                  gap: 12px;
+            }
+
+            .predicted-class {
+                  background: #e8d9cd;
+                  padding: 0.25rem 1rem;
+                  border-radius: 60px;
+                  font-size: 1.9rem;
+            }
+
+            .confidence {
+                  background: #f5e2d0;
+                  padding: 0.25rem 0.9rem;
+                  border-radius: 60px;
+                  font-size: 1.4rem;
+                  font-weight: 600;
+            }
+
+            .loading {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 10px;
+            }
+
+            .spinner {
+                  width: 22px;
+                  height: 22px;
+                  border: 3px solid #efe2d4;
+                  border-top: 3px solid #c56e2c;
+                  border-radius: 50%;
+                  animation: spin 0.7s linear infinite;
+            }
+
+            @keyframes spin {
+                  0% {
+                        transform: rotate(0deg);
+                  }
+
+                  100% {
+                        transform: rotate(360deg);
+                  }
+            }
+
+            .error-message {
+                  color: #bf4d2c;
+                  background: #ffede8;
+                  border-radius: 2rem;
+                  padding: 0.8rem;
+                  font-size: 0.9rem;
+                  font-weight: 500;
+                  margin-top: 0.8rem;
+            }
+
+            footer {
+                  margin-top: 1.8rem;
+                  font-size: 0.7rem;
+                  text-align: center;
+                  color: #ac8d6f;
+            }
+
+            hr {
+                  margin: 0.8rem 0;
+                  border: none;
+                  height: 1px;
+                  background: #ecd9c6;
+            }
+
+            @media (max-width: 500px) {
+                  .glass-card {
+                        padding: 1.5rem;
+                  }
+
+                  h1 {
+                        font-size: 1.5rem;
+                  }
+
+                  .result-badge {
+                        flex-direction: column;
+                        align-items: center;
+                  }
+            }
+      </style>
+</head>
+
+<body>
+
+      <div class="glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <h1>
+                        🐾 PetVision
+                        <span>AI</span>
+                  </h1>
+                  <div style="font-size: 1.8rem;">🐱🐶</div>
+            </div>
+            <div class="subhead">Upload a photo — our deep learning model will tell you: is it a <strong>cat</strong> or
+                  a <strong>dog</strong>?</div>
+
+            <!-- Upload zone -->
+            <div class="upload-area" id="uploadZone">
+                  <div class="upload-icon">📸 🐕</div>
+                  <div class="upload-text">Click or drag & drop an image</div>
+                  <div class="upload-hint">JPG, PNG, WEBP (Max 5MB)</div>
+                  <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/jpg">
+            </div>
+
+            <!-- Preview section -->
+            <div class="preview-container" id="previewContainer">
+                  <div class="placeholder-preview" id="placeholderPreview">
+                        <span>🖼️</span>
+                        <span>image preview</span>
+                  </div>
+                  <img id="imagePreview" class="image-preview" style="display: none;" alt="preview">
+            </div>
+
+            <!-- Predict button -->
+            <button class="predict-btn" id="predictBtn" disabled>
+                  🔮 Analyze & Predict
+            </button>
+
+            <!-- Result panel -->
+            <div class="result-card" id="resultCard">
+                  <div style="font-weight: 500; color: #7c5d3f; margin-bottom: 8px;">✨ Prediction result ✨</div>
+                  <div id="predictionContent" style="min-height: 85px;">
+                        <div style="color: #b59478; font-size: 0.9rem;">Waiting for image...</div>
+                  </div>
+            </div>
+            <footer>
+                  ⚡ FastAPI backend endpoint: <strong>/predict</strong> · Returns class & confidence
+            </footer>
+      </div>
+
+      <script>
+            // --- DOM elements ---
+            const uploadZone = document.getElementById('uploadZone');
+            const fileInput = document.getElementById('fileInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const placeholderPreview = document.getElementById('placeholderPreview');
+            const predictBtn = document.getElementById('predictBtn');
+            const predictionContent = document.getElementById('predictionContent');
+
+            // State: store currently selected image file
+            let currentImageFile = null;
+
+            // --- Helper to show error in result area ---
+            function showError(message) {
+                  predictionContent.innerHTML = `
+      <div class="error-message">
+        ⚠️ ${message}
+      </div>
+    `;
+            }
+
+            // --- Helper to show loading state in result card ---
+            function showLoading() {
+                  predictionContent.innerHTML = `
+      <div class="loading" style="justify-content:center; gap:12px;">
+        <div class="spinner"></div>
+        <span>Sending to AI model ...</span>
+      </div>
+    `;
+            }
+
+            // --- Display prediction data (class + confidence) from FastAPI response ---
+            function displayPrediction(result) {
+                  // Expected result format: { "class": "cat" or "dog", "confidence": 0.9876 }
+                  const predictedClass = result?.class;
+                  let confidenceValue = result?.confidence;
+
+                  if (!predictedClass) {
+                        showError('Invalid response from server: missing class field.');
+                        return;
+                  }
+
+                  // Ensure confidence is a number and format as percentage
+                  let confidencePercent = 'unknown';
+                  if (typeof confidenceValue === 'number') {
+                        confidencePercent = (confidenceValue * 100).toFixed(2) + '%';
+                  } else if (confidenceValue !== undefined && confidenceValue !== null) {
+                        // edge: if it's string representation but number-like
+                        const num = Number(confidenceValue);
+                        if (!isNaN(num)) confidencePercent = (num * 100).toFixed(2) + '%';
+                  }
+
+                  // Choose emoji & style based on class
+                  const classLower = predictedClass.toLowerCase();
+                  let emoji = '';
+                  let bgClassHint = '';
+                  if (classLower === 'cat') {
+                        emoji = '🐱 😺';
+                        bgClassHint = '#e2f0e6';
+                  } else if (classLower === 'dog') {
+                        emoji = '🐶 🐕';
+                        bgClassHint = '#fce9dc';
+                  } else {
+                        emoji = '🤖';
+                  }
+
+                  // Build result card content
+                  predictionContent.innerHTML = `
+      <div class="result-badge">
+        <span class="predicted-class" style="background: ${classLower === 'cat' ? '#cbe5d4' : '#f6ddca'}">
+          ${emoji} ${predictedClass.toUpperCase()}
+        </span>
+        <span class="confidence">🎯 Confidence: ${confidencePercent}</span>
+      </div>
+      <div style="font-size: 0.8rem; margin-top: 12px; color:#8a694c;">
+        model verdict · powered by deep learning
+      </div>
+    `;
+            }
+
+            // --- Core API call to FastAPI /predict endpoint ---
+            async function sendPredictionRequest(imageFile) {
+                  if (!imageFile) {
+                        showError('No image selected. Please choose an image first.');
+                        return false;
+                  }
+
+                  // Validate file type (additional safety)
+                  if (!imageFile.type.startsWith('image/')) {
+                        showError('Selected file is not a valid image. Please upload image (jpg, png, etc).');
+                        return false;
+                  }
+
+                  // Limit file size to 5 MB to avoid heavy payload (optional)
+                  const MAX_SIZE_MB = 5;
+                  if (imageFile.size > MAX_SIZE_MB * 1024 * 1024) {
+                        showError(`Image too large (max ${MAX_SIZE_MB}MB). Please compress or choose another.`);
+                        return false;
+                  }
+
+                  // Create FormData object to send file as multipart/form-data
+                  const formData = new FormData();
+                  // The FastAPI endpoint expects the file field name 'file' (typical: UploadFile = File(...))
+                  // According to your spec, it expects an image file. We'll use field name 'file'
+                  formData.append('file', imageFile);
+
+                  // Show loading indicator
+                  showLoading();
+
+                  try {
+                        // --- IMPORTANT: replace the URL with your actual FastAPI server address ---
+                        // For local development: http://127.0.0.1:8000/predict
+                        // If your FastAPI server runs on different port/host, adjust accordingly.
+                        const API_BASE_URL = 'http://127.0.0.1:8000';   // <-- change to your server URL
+                        const PREDICT_ENDPOINT = `${API_BASE_URL}/predict`;
+
+                        // Perform fetch request
+                        const response = await fetch(PREDICT_ENDPOINT, {
+                              method: 'POST',
+                              body: formData,
+                              // Do NOT set Content-Type header manually; browser sets correct multipart boundary
+                        });
+
+                        // Handle HTTP errors
+                        if (!response.ok) {
+                              let errorDetail = `HTTP error ${response.status}`;
+                              try {
+                                    const errorJson = await response.json();
+                                    errorDetail = errorJson.detail || errorJson.message || errorDetail;
+                              } catch (e) {
+                                    // if response not json, read text
+                                    errorDetail = await response.text().catch(() => errorDetail);
+                              }
+                              throw new Error(`Server responded with ${response.status}: ${errorDetail}`);
+                        }
+
+                        // Parse JSON response
+                        const resultData = await response.json();
+
+                        // Validate the result contains 'class' and optional confidence
+                        if (resultData && typeof resultData === 'object' && resultData.hasOwnProperty('class')) {
+                              displayPrediction(resultData);
+                              return true;
+                        } else {
+                              throw new Error('Unexpected response format: missing "class" field');
+                        }
+                  } catch (error) {
+                        console.error('Prediction API error:', error);
+                        let userMessage = error.message || 'Failed to connect to prediction service.';
+                        // Friendlier message if network/fetch fails
+                        if (error instanceof TypeError && error.message.includes('fetch')) {
+                              userMessage = 'Cannot reach FastAPI server. Please ensure backend is running at http://127.0.0.1:8000 and CORS is configured.';
+                        } else if (error.message.includes('Failed to fetch')) {
+                              userMessage = 'Network error: Could not connect to /predict endpoint. Check server status and CORS.';
+                        }
+                        showError(`Prediction failed: ${userMessage}`);
+                        return false;
+                  }
+            }
+
+            // --- Manage preview and enable predict button ---
+            function handleImageSelection(file) {
+                  if (!file) {
+                        // reset state if no file
+                        currentImageFile = null;
+                        imagePreview.style.display = 'none';
+                        placeholderPreview.style.display = 'flex';
+                        predictBtn.disabled = true;
+                        predictionContent.innerHTML = `<div style="color: #b59478; font-size: 0.9rem;">No image selected. Upload a picture to start.</div>`;
+                        return;
+                  }
+
+                  // Validate file type again
+                  if (!file.type.startsWith('image/')) {
+                        showError('Please select a valid image file (JPEG, PNG, WEBP).');
+                        currentImageFile = null;
+                        imagePreview.style.display = 'none';
+                        placeholderPreview.style.display = 'flex';
+                        predictBtn.disabled = true;
+                        return;
+                  }
+
+                  currentImageFile = file;
+
+                  // show preview
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                        placeholderPreview.style.display = 'none';
+                        // Enable predict button after image loaded & valid
+                        predictBtn.disabled = false;
+                        // Optionally reset previous prediction message
+                        predictionContent.innerHTML = `<div style="color: #b59478; font-size: 0.9rem;">✅ Image ready! Click "Analyze & Predict"</div>`;
+                  };
+                  reader.onerror = () => {
+                        showError('Could not read image file. Please try another.');
+                        currentImageFile = null;
+                        predictBtn.disabled = true;
+                  };
+                  reader.readAsDataURL(file);
+            }
+
+            // --- Trigger file input when clicking upload area ---
+            uploadZone.addEventListener('click', (e) => {
+                  // Avoid double trigger if clicked on inner elements
+                  if (e.target === fileInput) return;
+                  fileInput.click();
+            });
+
+            // --- Drag & drop support (modern browsers) ---
+            uploadZone.addEventListener('dragover', (e) => {
+                  e.preventDefault();
+                  uploadZone.style.background = '#fff2e5';
+                  uploadZone.style.borderColor = '#c97e3a';
+            });
+            uploadZone.addEventListener('dragleave', (e) => {
+                  e.preventDefault();
+                  uploadZone.style.background = '#fffef7';
+                  uploadZone.style.borderColor = '#deb887';
+            });
+            uploadZone.addEventListener('drop', (e) => {
+                  e.preventDefault();
+                  uploadZone.style.background = '#fffef7';
+                  uploadZone.style.borderColor = '#deb887';
+                  const files = e.dataTransfer.files;
+                  if (files && files.length > 0) {
+                        const droppedFile = files[0];
+                        if (droppedFile.type.startsWith('image/')) {
+                              handleImageSelection(droppedFile);
+                              // sync file input for consistency
+                              const dataTransfer = new DataTransfer();
+                              dataTransfer.items.add(droppedFile);
+                              fileInput.files = dataTransfer.files;
+                        } else {
+                              showError('Drop only image files (cat or dog photos).');
+                        }
+                  }
+            });
+
+            // --- Handle manual file selection via input ---
+            fileInput.addEventListener('change', (e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                        handleImageSelection(e.target.files[0]);
+                  } else {
+                        // if user cancels, no file
+                        handleImageSelection(null);
+                        fileInput.value = ''; // reset value
+                  }
+            });
+
+            // --- Predict button click handler ---
+            predictBtn.addEventListener('click', async () => {
+                  if (!currentImageFile) {
+                        showError('No image loaded. Please select an image first.');
+                        predictBtn.disabled = true;
+                        return;
+                  }
+                  // Disable button during request to avoid duplicate calls
+                  predictBtn.disabled = true;
+                  const originalBtnText = predictBtn.innerHTML;
+                  predictBtn.innerHTML = '<div class="loading"><div class="spinner"></div> Processing...</div>';
+
+                  const success = await sendPredictionRequest(currentImageFile);
+
+                  // Re-enable button only if we still have an image selected (and not disposed)
+                  if (currentImageFile) {
+                        predictBtn.disabled = false;
+                        predictBtn.innerHTML = originalBtnText;
+                  } else {
+                        // if something reset image, keep disabled
+                        predictBtn.disabled = true;
+                        predictBtn.innerHTML = '🔮 Analyze & Predict';
+                  }
+
+                  // If request failed for any network reason & image still exists, user can retry.
+                  if (!success && currentImageFile) {
+                        // Button already re-enabled, but keep message from error already shown.
+                        // We'll also ensure that the button text is restored
+                        predictBtn.innerHTML = originalBtnText;
+                  }
+            });
+
+            // Initial UI: reset state and show placeholder
+            function initUI() {
+                  handleImageSelection(null);
+                  // Additional: set up friendly CORS note (optional)
+                  console.log('Ready — waiting for image. Ensure FastAPI server is running with CORS enabled (if frontend on different port).');
+            }
+            initUI();
+
+            // Optional: small tip for developers to remind about FastAPI CORS setup.
+            // Show once in console but not intrusive
+            (function addCORSNotice() {
+                  const styleNote = document.createElement('div');
+                  styleNote.style.display = 'none';
+                  document.body.appendChild(styleNote);
+                  console.info('🐱🐶 PetVision frontend: Ensure your FastAPI backend is running on http://127.0.0.1:8000 with /predict endpoint accepting POST multipart file. If you encounter CORS error, add: from fastapi.middleware.cors import CORSMiddleware; app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])');
+            })();
+      </script>
+</body>
+
+</html>

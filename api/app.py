@@ -3,8 +3,17 @@ import torch
 from PIL import Image
 from torchvision import transforms
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],         # Allowed origins
+    allow_credentials=True,        # Allow cookies
+    allow_methods=["*"],           # Allow all HTTP methods
+    allow_headers=["*"],           # Allow all headers
+)
 
 @app.get("/")
 def root():
