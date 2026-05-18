@@ -27,7 +27,7 @@ cat-vs-dog-classifier/
 │   └── model/           # Trained model.pth file
 ├── src/Classifier/      # Core ML components
 │   ├── components/      # Data ingestion, model definition, training, evaluation
-│   ├── config/          # Configuration management (YAML-based)
+│   ├── config/          # Configuration management (For pipeline)
 │   ├── entity/          # Configuration dataclasses
 │   ├── pipeline/        # Pipeline orchestration classes
 │   └── utils/           # Helper functions (YAML, file operations, logging)
