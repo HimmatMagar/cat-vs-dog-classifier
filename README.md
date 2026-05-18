@@ -89,7 +89,7 @@ python main.py
 - `POST /predict` - Image prediction endpoint
 
 **POST /predict**
-- **Parameters**: `file` (required) - Image file (JPG, PNG, WEBP)
+- **Parameters**: `file` (required) - Image file (JPG, PNG, WEBP) any type
 - **Returns**: JSON with prediction results
   ```json
   {
@@ -103,7 +103,7 @@ python main.py
 - **Deep Learning Framework**: PyTorch, torchvision
 - **API Framework**: FastAPI, Uvicorn
 - **Frontend**: HTML5, CSS3, JavaScript (Fetch API)
-- **Data Handling**: gdown (Google Drive download), PIL/Pillow
+- **Data Handling**: gdown (Google Drive download), PIL
 - **Configuration**: PyYAML, python-box
 - **Utilities**: ensure (type checking), joblib
 - **Environment**: conda, Python 3.12
