@@ -2,11 +2,11 @@
 
 A deep learning-based image classification system that distinguishes between cat and dog images using a Convolutional Neural Network (CNN). The project includes automated data ingestion, model training, evaluation, a FastAPI backend for predictions, and a user-friendly web interface.
 
-## 🎯 Overview
+## Overview
 
 This project implements a complete machine learning pipeline for classifying images as either cats or dogs. It handles everything from downloading the dataset to training a CNN model and serving predictions through a REST API with an interactive frontend.
 
-## 🔧 Features
+## Features
 
 - **Automated Data Pipeline**: Downloads dataset from Google Drive and extracts it automatically
 - **Custom CNN Architecture**: Built with PyTorch featuring convolutional blocks, batch normalization, and dropout layers
@@ -16,7 +16,7 @@ This project implements a complete machine learning pipeline for classifying ima
 - **Complete Pipeline Orchestration**: Modular pipeline stages for data ingestion, training, and evaluation
 - **Production-Ready**: Includes logging, configuration management, and proper error handling
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 cat-vs-dog-classifier/
@@ -42,7 +42,7 @@ cat-vs-dog-classifier/
 └── main.py              # Pipeline execution script
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.12
@@ -80,7 +80,7 @@ python main.py
    - The frontend automatically connects to the backend at `http://127.0.0.1:8000/predict`
    - Upload an image to get cat/dog predictions with confidence scores
 
-## 📖 API Documentation
+## API Documentation
 
 ### Endpoints
 
@@ -98,7 +98,7 @@ python main.py
   }
   ```
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **Deep Learning Framework**: PyTorch, torchvision
 - **API Framework**: FastAPI, Uvicorn
@@ -108,7 +108,7 @@ python main.py
 - **Utilities**: ensure (type checking), joblib
 - **Environment**: conda, Python 3.12
 
-## 📊 Model Architecture
+## Model Architecture
 
 The CNN consists of:
 - **Feature Extractor**: 3 convolutional blocks (Conv2D → BatchNorm → ReLU → MaxPool2d)
@@ -116,11 +116,11 @@ The CNN consists of:
 - **Input**: RGB images resized to 128×128 pixels
 - **Output**: 2-class classification (cat/dog)
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Acknowledgments
+## Acknowledgments
 
 - Dataset sourced from Google Drive
 - Built with PyTorch and FastAPI communities
