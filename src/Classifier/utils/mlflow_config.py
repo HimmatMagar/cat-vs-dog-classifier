@@ -14,7 +14,7 @@ def _initialize_dagshub():
     if not _DAGSHUB_INITIALIZED:
         dagshub.init(
             repo_owner='HimmatMagar',
-            repo_name='Email_Spam_Classifier',
+            repo_name='cat-vs-dog-classifier',
             mlflow=True
         )
         _DAGSHUB_INITIALIZED = True

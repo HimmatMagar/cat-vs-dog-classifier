@@ -14,7 +14,7 @@ class DataIngestion:
 
       def download_zip_file(self):
             if not os.path.exists(self.config.zip_file):
-                  file_id = "1N-XqibEcyHezLK1IYH0Us_81UqhEDuMH"
+                  file_id = "10k609ueh2PQ84Mz1Qz6WcBQZwTK4WjW0"
 
                   gdown.download(
                         id=file_id,
