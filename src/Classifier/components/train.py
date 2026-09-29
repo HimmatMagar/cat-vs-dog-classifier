@@ -27,17 +27,19 @@ class TrainModel:
       
 
       def trainModel(self):
-            model = CNeuralNetwork()
+            device = "mps" if torch.backends.mps.is_available() else "cpu"
+            model = CNeuralNetwork().to(device)
             train_data_loader = self.prepare_data()
             
 
-            criterion = nn.BCELoss()
+            criterion = nn.CrossEntropyLoss()
             optimizer = optim.Adam(model.parameters(), lr=0.001)
 
             for epoch in range(5):
 
                   total_epochs_loss = 0
                   for image, labels in train_data_loader:
+                        image, labels = image.to(device), labels.to(device)
                         output = model(image)
 
                         loss = criterion(output, labels)

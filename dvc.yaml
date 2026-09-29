@@ -24,6 +24,6 @@ stages:
       - artifact/data_ingestion/test
       - config/config.yaml
       - artifact/model_building/model.pth
-    metrices:
+    metrics:
       - artifact/model_evaluation/metric.json:
-          cache: False
+          cache: false

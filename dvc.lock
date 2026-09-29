@@ -1,0 +1,24 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: uv run src/Classifier/pipeline/data_ingestion_pipeline.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 3881795198a090e135e6ee804b067a72
+      size: 542
+    - path: src/Classifier/components/data_ingestion.py
+      hash: md5
+      md5: 463c141741efd57afe5a430bf300331d
+      size: 993
+    outs:
+    - path: artifact/data_ingestion/test
+      hash: md5
+      md5: e34ce247a4ba4ed441abd36d6f54a4d5.dir
+      size: 113168459
+      nfiles: 5000
+    - path: artifact/data_ingestion/train
+      hash: md5
+      md5: 34558834f7b1fa308b2497245497180c.dir
+      size: 458746917
+      nfiles: 20000
