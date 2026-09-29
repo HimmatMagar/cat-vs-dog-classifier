@@ -35,7 +35,7 @@ class TrainModel:
             criterion = nn.CrossEntropyLoss()
             optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-            for epoch in range(5):
+            for epoch in range(10):
 
                   total_epochs_loss = 0
                   for image, labels in train_data_loader:
@@ -58,3 +58,7 @@ class TrainModel:
             with open(model_path, "wb") as f:
                   torch.save(model, f)
             logger.info(f"Model Saved successfully in {model_path}")
+
+            images, labels = next(iter(train_data_loader))
+            input_example = images[:1]
+            return model, input_example

@@ -16,6 +16,7 @@ stages:
       - config/config.yaml
     outs:
       - artifact/model_building/model.pth
+      - artifact/run_id.txt
   
   model_eval:
     cmd: uv run src/Classifier/pipeline/model_eval_pipeline.py
