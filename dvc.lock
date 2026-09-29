@@ -22,3 +22,28 @@ stages:
       md5: 34558834f7b1fa308b2497245497180c.dir
       size: 458746917
       nfiles: 20000
+  model_training:
+    cmd: uv run src/Classifier/pipeline/model_training_pipeline.py
+    deps:
+    - path: artifact/data_ingestion/train
+      hash: md5
+      md5: 34558834f7b1fa308b2497245497180c.dir
+      size: 458746917
+      nfiles: 20000
+    - path: config/config.yaml
+      hash: md5
+      md5: 3881795198a090e135e6ee804b067a72
+      size: 542
+    - path: src/Classifier/components/train.py
+      hash: md5
+      md5: dc73ba9edb9d4ac0ab8ff3abde661fbc
+      size: 2244
+    outs:
+    - path: artifact/model/model.pth
+      hash: md5
+      md5: 8ca95350a923b2feb7b5ee1e60c8f35e
+      size: 17202066
+    - path: artifact/run_id.txt
+      hash: md5
+      md5: 4bf693d7107420f3816e7c096c95eeed
+      size: 32

@@ -15,7 +15,7 @@ stages:
       - artifact/data_ingestion/train
       - config/config.yaml
     outs:
-      - artifact/model_building/model.pth
+      - artifact/model/model.pth
       - artifact/run_id.txt
   
   model_eval:
@@ -24,7 +24,7 @@ stages:
       - src/Classifier/components/model_eval.py
       - artifact/data_ingestion/test
       - config/config.yaml
-      - artifact/model_building/model.pth
+      - artifact/model/model.pth
     metrics:
       - artifact/model_evaluation/metric.json:
           cache: false

@@ -1,5 +1,6 @@
 import mlflow
 from Classifier import logger
+from dotenv import load_dotenv
 from Classifier.config import ConfigurationManager
 from Classifier.components.model_eval import ModelEval
 from Classifier.utils.mlflow_config import configure_mlflow, load_run_id
@@ -14,8 +15,10 @@ class ModelEvalPipeline:
 
       
       def main(self):
+            load_dotenv()
             config = ConfigurationManager()
             eval_config = config.get_model_eval_config()
+
 
             run_id = load_run_id()
 
