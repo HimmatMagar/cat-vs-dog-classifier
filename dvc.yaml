@@ -1,0 +1,29 @@
+stages:
+  data_ingestion:
+    cmd: uv run src/Classifier/pipeline/data_ingestion_pipeline.py
+    deps:
+      - src/Classifier/components/data_ingestion.py
+      - config/config.yaml
+    outs:
+      - artifact/data_ingestion/test
+      - artifact/data_ingestion/train
+  
+  model_training:
+    cmd: uv run src/Classifier/pipeline/model_training_pipeline.py
+    deps:
+      - src/Classifier/components/train.py
+      - artifact/data_ingestion/train
+      - config/config.yaml
+    outs:
+      - artifact/model_building/model.pth
+  
+  model_eval:
+    cmd: uv run src/Classifier/pipeline/model_eval_pipeline.py
+    deps:
+      - src/Classifier/components/model_eval.py
+      - artifact/data_ingestion/test
+      - config/config.yaml
+      - artifact/model_building/model.pth
+    metrices:
+      - artifact/model_evaluation/metric.json:
+          cache: False

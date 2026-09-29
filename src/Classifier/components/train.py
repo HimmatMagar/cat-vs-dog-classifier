@@ -31,7 +31,7 @@ class TrainModel:
             train_data_loader = self.prepare_data()
             
 
-            criterion = nn.CrossEntropyLoss()
+            criterion = nn.BCELoss()
             optimizer = optim.Adam(model.parameters(), lr=0.001)
 
             for epoch in range(5):
@@ -56,10 +56,3 @@ class TrainModel:
             with open(model_path, "wb") as f:
                   torch.save(model, f)
             logger.info(f"Model Saved successfully in {model_path}")
-            
-            
-
-
-      
-
-
