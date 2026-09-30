@@ -18,7 +18,7 @@ class ModelTrainingPipeline:
 
             configure_mlflow(experiment_name="Pytorch-cnn")
 
-            with mlflow.start_run(run_name="CNN-model") as run:
+            with mlflow.start_run(run_name="CNN-Model") as run:
                   try:
                         trainModel = TrainModel(train_model_config)
                         model, input_example = trainModel.trainModel()
@@ -29,7 +29,7 @@ class ModelTrainingPipeline:
                               artifact_path="model",
                               input_example=input_example,
                               serialization_format="pickle",
-                              registered_model_name="cnn-model"
+                              registered_model_name="CNN-Model"
                         )
                         logger.info("Model logged successfully")
                         save_run_id(run.info.run_id)
