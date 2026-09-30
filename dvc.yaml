@@ -26,5 +26,5 @@ stages:
       - config/config.yaml
       - artifact/model/model.pth
     metrics:
-      - artifact/model_evaluation/metric.json:
+      - artifact/model_eval/metric.json:
           cache: false

@@ -15,11 +15,11 @@ class ModelEvalPipeline:
 
       
       def main(self):
-            load_dotenv()
             config = ConfigurationManager()
             eval_config = config.get_model_eval_config()
 
 
+            load_dotenv()
             run_id = load_run_id()
 
             with mlflow.start_run(run_id=run_id):

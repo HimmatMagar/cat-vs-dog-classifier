@@ -24,7 +24,7 @@ class ModelTrainingPipeline:
                         model, input_example = trainModel.trainModel()
 
                         model.eval();
-                        logged_model = mlflow.pytorch.log_model(
+                        mlflow.pytorch.log_model(
                               pytorch_model=model,
                               artifact_path="model",
                               input_example=input_example,

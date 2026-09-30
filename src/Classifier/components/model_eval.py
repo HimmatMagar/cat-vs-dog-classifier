@@ -33,9 +33,10 @@ class ModelEval:
 
             all_pred = []
             all_label = []
-
+            device = "mps" if torch.backends.mps.is_available() else "cpu"
             with torch.no_grad():
                   for input, labels in test_dataset:
+                        input, labels = input.to(device), labels.to(device)
                         output = model(input)
                         _, predict = torch.max(output, 1)
 

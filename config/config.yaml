@@ -16,4 +16,4 @@ model_evaluation:
   root_dir: artifact/model_eval
   test_data_file: artifact/data_ingestion/test
   model: artifact/model/model.pth
-  metrices: model_evaluation/metric.json
+  metrices: artifact/model_eval/metric.json
