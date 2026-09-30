@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.concurrency import run_in_threadpool
@@ -7,7 +8,8 @@ from Classifier.pipeline.prediction_pipeline import PredictionPipeline
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    app.state.pipeline = PredictionPipeline(class_names=["class_a", "class_b"])
+    load_dotenv()
+    app.state.pipeline = PredictionPipeline(class_names=["cat", "dog"])
     yield
 
 app = FastAPI(lifespan=lifespan)

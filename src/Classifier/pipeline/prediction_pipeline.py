@@ -8,8 +8,8 @@ from Classifier.utils import logger
 
 class PredictionPipeline:
     def __init__(self, model_uri: str = "models:/cnn-model@champion", class_names=None):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.class_names = class_names  # e.g. ["cat", "dog"]
+        self.device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+        self.class_names = class_names
 
         self.transform = transforms.Compose([
             transforms.Resize((128, 128)),
