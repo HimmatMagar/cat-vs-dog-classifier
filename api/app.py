@@ -1,7 +1,6 @@
 import io
 import torch
 from PIL import Image
-from torchvision import transforms
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -23,16 +22,6 @@ def root():
 def health_check():
     return {"status": "ok"}
 
-
-## Load the model
-model = torch.load("artifact/model/model.pth", weights_only=False)
-model.eval()
-
-transform = transforms.Compose([
-      transforms.Resize((128, 128)),
-      transforms.ToTensor(),
-      transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-])
 
 CLASS_NAMES = ["cat", "dog"]
 
