@@ -1,10 +1,16 @@
-import io
-import torch
-from PIL import Image
-from fastapi import FastAPI, File, UploadFile
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
+from Classifier.pipeline.prediction_pipeline import PredictionPipeline
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.pipeline = PredictionPipeline(class_names=["class_a", "class_b"])
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,21 +29,10 @@ def health_check():
     return {"status": "ok"}
 
 
-CLASS_NAMES = ["cat", "dog"]
-
-
 @app.post("/predict")
-async def predict_(file: UploadFile = File(...)):
-    image_byte = await file.read()
-    image = Image.open(io.BytesIO(image_byte)).convert("RGB")
-    tensor = transform(image).unsqueeze(0)
-
-    with torch.no_grad():
-        output     = model(tensor)
-        probs      = torch.softmax(output, dim=1)
-        confidence, predicted = torch.max(probs, 1)
-
-    return {
-        "class"     : CLASS_NAMES[predicted.item()],
-        "confidence": round(confidence.item(), 4)
-    }
+async def predict(file: UploadFile = File(...)):
+    image_bytes = await file.read()
+    try:
+        return await run_in_threadpool(app.state.pipeline.predict, image_bytes)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
