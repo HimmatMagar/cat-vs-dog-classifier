@@ -340,11 +340,11 @@
             // --- Helper to show loading state in result card ---
             function showLoading() {
                   predictionContent.innerHTML = `
-      <div class="loading" style="justify-content:center; gap:12px;">
-        <div class="spinner"></div>
-        <span>Sending to AI model ...</span>
-      </div>
-    `;
+                        <div class="loading" style="justify-content:center; gap:12px;">
+                        <div class="spinner"></div>
+                        <span>Sending to AI model ...</span>
+                        </div>
+                  `;
             }
 
             // --- Display prediction data (class + confidence) from FastAPI response ---
@@ -384,16 +384,16 @@
 
                   // Build result card content
                   predictionContent.innerHTML = `
-      <div class="result-badge">
-        <span class="predicted-class" style="background: ${classLower === 'cat' ? '#cbe5d4' : '#f6ddca'}">
-          ${emoji} ${predictedClass.toUpperCase()}
-        </span>
-        <span class="confidence">🎯 Confidence: ${confidencePercent}</span>
-      </div>
-      <div style="font-size: 0.8rem; margin-top: 12px; color:#8a694c;">
-        model verdict · powered by deep learning
-      </div>
-    `;
+                        <div class="result-badge">
+                        <span class="predicted-class" style="background: ${classLower === 'cat' ? '#cbe5d4' : '#f6ddca'}">
+                        ${emoji} ${predictedClass.toUpperCase()}
+                        </span>
+                        <span class="confidence">🎯 Confidence: ${confidencePercent}</span>
+                        </div>
+                        <div style="font-size: 0.8rem; margin-top: 12px; color:#8a694c;">
+                        model verdict · powered by deep learning
+                        </div>
+                  `;
             }
 
             // --- Core API call to FastAPI /predict endpoint ---

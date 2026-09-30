@@ -41,6 +41,6 @@ class PredictionPipeline:
         idx = predicted.item()
         return {
             "class_id": idx,
-            "class_name": self.class_names[idx] if self.class_names else None,
+            "class": self.class_names[idx] if self.class_names else None,
             "confidence": round(confidence.item(), 4),
         }
