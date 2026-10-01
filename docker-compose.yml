@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    container_name: catvsdogclassifier
+    env_file:
+      - .env
+    ports:
+      - "8000:5000"
+    restart: unless-stopped
+  frontend:
+    image: python:3.12-slim
+    container_name: catvsdogfrontend
+    working_dir: /frontend
+    volumes:
+      - ./frontend:/frontend
+    command: python -u -m http.server 5000 --bind 0.0.0.0
+    ports:
+      - "3000:5000"
+    depends_on:
+      - backend
