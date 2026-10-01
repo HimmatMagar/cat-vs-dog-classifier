@@ -1,0 +1,12 @@
+.venv/
+.git/
+.dvc/
+artifact/
+notebooks/
+logging/
+mlflow.db
+.env
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+frontend/node_modules/
