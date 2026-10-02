@@ -14,7 +14,7 @@ This project implements a complete machine learning pipeline for classifying ima
 - **REST API Backend**: FastAPI service with CORS support serving predictions at `/predict` endpoint
 - **Interactive Frontend**: Modern web interface with drag-and-drop upload, image preview, and real-time predictions
 - **Complete Pipeline Orchestration**: Modular pipeline stages for data ingestion, training, and evaluation
-- **Production-Ready**: Includes logging, configuration management, and proper error handling
+- **Production-Ready**: Includes logging, configuration management, proper error handling, remote mlflow server with docker and docker compose
 
 ## Project Structure
 
