@@ -67,7 +67,7 @@ python main.py
 
 1. **Start the FastAPI backend**:
    ```bash
-   uvicorn api.app:app --reload
+   uv run uvicorn api.app:app --reload
    ```
    The API will be available at `http://127.0.0.1:8000`
 
@@ -75,6 +75,10 @@ python main.py
    - Open `templates/index.html` in your web browser
    - The frontend automatically connects to the backend at `http://127.0.0.1:8000/predict`
    - Upload an image to get cat/dog predictions with confidence scores
+   - To use frontend use
+   ```bash
+   python -m http.server 3000
+   ```
 
 ## API Documentation
 
