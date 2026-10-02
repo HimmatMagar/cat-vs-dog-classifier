@@ -52,14 +52,10 @@ cat-vs-dog-classifier/
 ### Installation
 
 1. **Clone the repository** (if applicable)
-2. **Create and activate conda environment**:
+2. **Create and activate environment**:
    ```bash
-   conda create -p env python==3.12 -y
-   conda activate env/
-   ```
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
+   uv sync
+   source .venv/bin/activate
    ```
 
 execute pipeline:
