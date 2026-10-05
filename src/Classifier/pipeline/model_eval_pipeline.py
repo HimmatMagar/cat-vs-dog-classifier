@@ -24,7 +24,7 @@ class ModelEvalPipeline:
 
             with mlflow.start_run(run_id=run_id):
                   model_eval = ModelEval(eval_config)
-                  metrices = model_eval.evaluate_model()
+                  metrices = model_eval._evaluate_model()
 
                   mlflow.log_metrics(metrices)
                   logger.info("metrices saved successfull")

@@ -16,6 +16,12 @@ class ModelBuildingConfig:
       train_data_file: Path
       test_data_file: Path
       model: str
+      batch_size: int
+      num_worker: int
+      epochs: int
+      lr_layer: float
+      lr_fc: float
+      weight_decay: float
 
 @dataclass(frozen=True)
 class ModelEvalConfig:
@@ -23,3 +29,5 @@ class ModelEvalConfig:
       test_data_file: Path
       model: Path
       metrices: Path
+      batch_size: int
+      num_worker: int

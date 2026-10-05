@@ -4,4 +4,4 @@ params:
   epochs: 5
   lr_layer: 1e-5
   lr_fc: 1e-4
-  
+  weight_decay: 1e-2

@@ -6,8 +6,9 @@ from Classifier.entity import *
 
 class ConfigurationManager:
 
-      def __init__(self, config = config):
+      def __init__(self, config = config, params = params):
             self.config = read_yaml(config)
+            self.params = read_yaml(params)
             
             create_dir([self.config.artifact_root])
 
@@ -25,23 +26,33 @@ class ConfigurationManager:
       
       def get_model_building_config(self) -> ModelBuildingConfig:
             config = self.config.model_building
+            params = self.params.params
             create_dir([config.root_dir])
 
             return ModelBuildingConfig(
                   root_dir = config.root_dir,
                   train_data_file = config.train_data_file,
                   test_data_file=config.test_data_file,
-                  model = config.model
+                  model = config.model,
+                  batch_size = params.batch_size,
+                  num_worker = params.num_worker,
+                  epochs = params.epochs,
+                  lr_layer = params.lr_layer,
+                  lr_fc = params.lr_fc,
+                  weight_decay=params.weight_decay
             )
       
 
       def get_model_eval_config(self) -> ModelEvalConfig:
             config = self.config.model_evaluation
+            params = self.params.params
             create_dir([config.root_dir])
 
             return ModelEvalConfig(
                   root_dir=config.root_dir,
                   test_data_file=config.test_data_file,
                   model=config.model,
-                  metrices=config.metrices
+                  metrices=config.metrices,
+                  num_worker=params.num_worker,
+                  batch_size=params.batch_size
             )
