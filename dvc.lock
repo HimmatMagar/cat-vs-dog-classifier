@@ -5,8 +5,8 @@ stages:
     deps:
     - path: config/config.yaml
       hash: md5
-      md5: 11cec452f3cf97e5def2fa5ab8182238
-      size: 545
+      md5: b646f8f0d22c473e82e473106d2430a8
+      size: 592
     - path: src/Classifier/components/data_ingestion.py
       hash: md5
       md5: 463c141741efd57afe5a430bf300331d
@@ -32,20 +32,20 @@ stages:
       nfiles: 20000
     - path: config/config.yaml
       hash: md5
-      md5: 11cec452f3cf97e5def2fa5ab8182238
-      size: 545
+      md5: b646f8f0d22c473e82e473106d2430a8
+      size: 592
     - path: src/Classifier/components/train.py
       hash: md5
-      md5: dc73ba9edb9d4ac0ab8ff3abde661fbc
-      size: 2244
+      md5: f2d00626e52e24695ee651b9fe1e3893
+      size: 3120
     outs:
     - path: artifact/model/model.pth
       hash: md5
-      md5: e7e75d37b22313211f45ab7879c272ed
-      size: 17202066
+      md5: a639990576ebe6e9da767c033d3dba95
+      size: 46848011
     - path: artifact/run_id.txt
       hash: md5
-      md5: 9a1bf55eb5ead3c6a5680ef761bcec70
+      md5: 528f918a1254b998254b8bf5d5d7a17c
       size: 32
   model_eval:
     cmd: uv run src/Classifier/pipeline/model_eval_pipeline.py

@@ -25,30 +25,31 @@ class ModelEval:
             test_dataset = datasets.ImageFolder(self.config.test_data_file, transform=test_data_transform)
             return DataLoader(test_dataset, batch_size=32, shuffle=True)
 
+      
+      def evaluate(self, model, dataloader, device):
+            correct, total = 0, 0
+            with torch.no_grad():
+                  for x, y in dataloader:
+                        x, y = x.to(device), y.to(device)
+                        preds = model(x).argmax(1)
+                        correct += (preds == y).sum().item()
+                        total += y.size(0)
+            return correct, total
+
+
       def evaluate_model(self):
             model = torch.load(self.config.model, weights_only=False)
-            model.eval()
+            model.eval();
 
             test_dataset = self.prepare_data()
-
-            all_pred = []
-            all_label = []
             device = "mps" if torch.backends.mps.is_available() else "cpu"
-            with torch.no_grad():
-                  for input, labels in test_dataset:
-                        input, labels = input.to(device), labels.to(device)
-                        output = model(input)
-                        _, predict = torch.max(output, 1)
+            correct, total = self.evaluate(model, test_dataset, device)
 
-                        all_pred.extend(predict.cpu().numpy())
-                        all_label.extend(labels.cpu().numpy())
-            
             performance_report = {
-                  "accuracy" : accuracy_score(all_label, all_pred),
-                  "precision": precision_score(all_label, all_pred, average="macro", zero_division=0),
-                  "recall"   : recall_score(all_label, all_pred, average="macro", zero_division=0)
+                  "accuracy" : accuracy_score(total, correct),
+                  "precision": precision_score(total, correct, average="macro", zero_division=0),
+                  "recall"   : recall_score(total, correct, average="macro", zero_division=0)
             }
-
             save_file(Path(self.config.metrices), performance_report)
             logger.info(f"Model performance report saved successfully in {self.config.metrices}")
             return performance_report
