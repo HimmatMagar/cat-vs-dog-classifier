@@ -30,6 +30,7 @@ class ConfigurationManager:
             return ModelBuildingConfig(
                   root_dir = config.root_dir,
                   train_data_file = config.train_data_file,
+                  test_data_file=config.test_data_file,
                   model = config.model
             )
       

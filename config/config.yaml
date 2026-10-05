@@ -9,6 +9,7 @@ data_ingestion:
 model_building:
   root_dir: artifact/model
   train_data_file: artifact/data_ingestion/train
+  test_data_file: artifact/data_ingestion/test
   model: model.pth
 
 

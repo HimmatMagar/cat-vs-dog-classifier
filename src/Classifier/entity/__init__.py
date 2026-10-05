@@ -14,6 +14,7 @@ class DataIngestionConfig:
 class ModelBuildingConfig:
       root_dir: Path
       train_data_file: Path
+      test_data_file: Path
       model: str
 
 @dataclass(frozen=True)
