@@ -9,4 +9,3 @@ mlflow.db
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
-frontend/node_modules/
