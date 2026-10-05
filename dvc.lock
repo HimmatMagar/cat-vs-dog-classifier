@@ -36,16 +36,16 @@ stages:
       size: 592
     - path: src/Classifier/components/train.py
       hash: md5
-      md5: f2d00626e52e24695ee651b9fe1e3893
-      size: 3120
+      md5: cf8657bed5189e081008b496e7f87131
+      size: 4434
     outs:
     - path: artifact/model/model.pth
       hash: md5
-      md5: a639990576ebe6e9da767c033d3dba95
-      size: 46848011
+      md5: 7663a9d8843b7fb9302e3890381dae79
+      size: 44793931
     - path: artifact/run_id.txt
       hash: md5
-      md5: 528f918a1254b998254b8bf5d5d7a17c
+      md5: 54862eda5b6b0ff22c503ca42ad81a56
       size: 32
   model_eval:
     cmd: uv run src/Classifier/pipeline/model_eval_pipeline.py
@@ -57,18 +57,18 @@ stages:
       nfiles: 5000
     - path: artifact/model/model.pth
       hash: md5
-      md5: e7e75d37b22313211f45ab7879c272ed
-      size: 17202066
+      md5: 7663a9d8843b7fb9302e3890381dae79
+      size: 44793931
     - path: config/config.yaml
       hash: md5
-      md5: 11cec452f3cf97e5def2fa5ab8182238
-      size: 545
+      md5: b646f8f0d22c473e82e473106d2430a8
+      size: 592
     - path: src/Classifier/components/model_eval.py
       hash: md5
-      md5: 9f9071cf998ee329e701026913e56049
-      size: 2135
+      md5: 500bec4b6d3d550d9c1b1d0d4ffbc2ad
+      size: 2389
     outs:
     - path: artifact/model_eval/metric.json
       hash: md5
-      md5: 4eedeb21be9e1dd729b63f300c9318bc
-      size: 85
+      md5: 64f7c958f01cfb428fe3a65aeb11063c
+      size: 84

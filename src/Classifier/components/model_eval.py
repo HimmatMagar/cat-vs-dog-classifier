@@ -13,7 +13,6 @@ def get_device() -> str:
         return "mps"
     return "cpu"
 
-
 class ModelEval:
       def __init__(self, config: ModelBuildingConfig):
             self.config = config
@@ -25,31 +24,31 @@ class ModelEval:
                   transforms.Resize(128),
                   transforms.CenterCrop(128),
                   transforms.ToTensor(),
-                  transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+                  transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
             ])
 
-            pin = self.device
             test_dataset = datasets.ImageFolder(self.config.test_data_file, transform=test_tf)
             return DataLoader(
                   test_dataset, batch_size=self.config.batch_size,
-                  shuffle=False, num_workers=self.config.num_worker,
-                  pin_memory=pin
+                  shuffle=False, num_workers=self.config.num_worker
             )
 
       
       def _evaluate(self, model, dataloader, device):
-            correct, total = 0, 0
+            all_preds, all_labels = [], []
             with torch.no_grad():
                   for x, y in dataloader:
-                        x, y = x.to(device), y.to(device)
-                        preds = model(x).argmax(1)
-                        correct += (preds == y).sum().item()
-                        total += y.size(0)
-            return correct, total
+                        x = x.to(device)
+                        preds = model(x).argmax(1).cpu()
+                        all_preds.extend(preds.tolist())
+                        all_labels.extend(y.tolist())
+            return all_labels, all_preds
+
 
 
       def _evaluate_model(self):
             model = torch.load(self.config.model, weights_only=False)
+            model.to(self.device)
             model.eval();
 
             test_dataset = self._prepare_data()

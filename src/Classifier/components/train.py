@@ -39,16 +39,13 @@ class TrainModel:
             train_dataset = datasets.ImageFolder(self.config.train_data_file, transform=train_tf)
             test_dataset = datasets.ImageFolder(self.config.test_data_file, transform=test_tf)
 
-            pin = self.device
             train_data_loader = DataLoader(
                   train_dataset, batch_size=self.config.batch_size,
-                  shuffle=True, num_workers=self.config.num_worker,
-                  pin_memory= pin
+                  shuffle=True, num_workers=self.config.num_worker
             )
             test_data_loader = DataLoader(
                   test_dataset, batch_size=self.config.batch_size,
-                  shuffle=False, num_workers=self.config.num_worker,
-                  pin_memory= pin
+                  shuffle=False, num_workers=self.config.num_worker
             )
             return train_data_loader, test_data_loader
 
@@ -101,10 +98,9 @@ class TrainModel:
                               preds = self.model(x).argmax(1)
                               correct += (preds == y).sum().item()
                               total += y.size(0)
-                  acc = correct / total
-                  logger.info("Epoch %d: loss=%.4f val_acc=%.4f", epoch + 1, epochs_loss, acc)
+                  print(f"Epoch :{epoch + 1}, loss: {epochs_loss:.4f}, val_acc: {correct/total:.4f}")
 
-                  path = os.path.join(self.config.root_dir, self.config.model)
-                  torch.save(self.model.state_dict(), path)
-                  logger.info("Checkpoint saved to %s", path)
-                  return self.model
+            path = os.path.join(self.config.root_dir, self.config.model)
+            torch.save(self.model, path)
+            logger.info("Checkpoint saved to %s", path)
+            return self.model
