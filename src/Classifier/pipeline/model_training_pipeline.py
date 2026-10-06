@@ -20,6 +20,15 @@ class ModelTrainingPipeline:
 
             with mlflow.start_run(run_name="ResNet18") as run:
                   try:
+                        mlflow.log_params({
+                              "batch_size": train_model_config.batch_size,
+                              "num_worker": train_model_config.num_worker,
+                              "epochs": train_model_config.epochs,
+                              "lr_layer": train_model_config.lr_layer,
+                              "lr_fc": train_model_config.lr_fc,
+                              "weight_decay": train_model_config.weight_decay
+                        })
+                        logger.info("Parameters logged successfully!!!")
                         trainModel = TrainModel(train_model_config)
                         model = trainModel.trainModel()
 

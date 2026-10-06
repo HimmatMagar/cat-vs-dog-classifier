@@ -41,11 +41,11 @@ stages:
     outs:
     - path: artifact/model/model.pth
       hash: md5
-      md5: 7663a9d8843b7fb9302e3890381dae79
+      md5: 426ba3c075cf6cb05a46805363ffe96e
       size: 44793931
     - path: artifact/run_id.txt
       hash: md5
-      md5: 54862eda5b6b0ff22c503ca42ad81a56
+      md5: f29b035ce13798abad66c2ae18971fef
       size: 32
   model_eval:
     cmd: uv run src/Classifier/pipeline/model_eval_pipeline.py
@@ -57,7 +57,7 @@ stages:
       nfiles: 5000
     - path: artifact/model/model.pth
       hash: md5
-      md5: 7663a9d8843b7fb9302e3890381dae79
+      md5: 426ba3c075cf6cb05a46805363ffe96e
       size: 44793931
     - path: config/config.yaml
       hash: md5
@@ -70,5 +70,5 @@ stages:
     outs:
     - path: artifact/model_eval/metric.json
       hash: md5
-      md5: 64f7c958f01cfb428fe3a65aeb11063c
-      size: 84
+      md5: baf5d06728b19b37be1388ee38d107ef
+      size: 97
