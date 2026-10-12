@@ -18,9 +18,3 @@ model_evaluation:
   test_data_file: artifact/data_ingestion/test
   model: artifact/model/model.pth
   metrices: artifact/model_eval/metric.json
-
-
-model_promotion:
-  root_dir: output/model_promotion
-  x_test: output/data_transformation/x_test.pkl
-  y_test: output/data_transformation/y_test.pkl
