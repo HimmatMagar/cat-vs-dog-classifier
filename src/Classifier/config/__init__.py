@@ -56,3 +56,14 @@ class ConfigurationManager:
                   num_worker=params.num_worker,
                   batch_size=params.batch_size
             )
+
+
+      def get_model_promote_config(self) -> ModelPromoteConfig:
+            config = self.config.model_promotion
+            create_dir([config.root_dir])
+
+            return ModelPromoteConfig(
+                  root_dir=config.root_dir,
+                  x_test=config.x_test,
+                  y_test=config.y_test
+            )
