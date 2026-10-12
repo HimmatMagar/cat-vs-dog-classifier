@@ -31,3 +31,10 @@ class ModelEvalConfig:
       metrices: Path
       batch_size: int
       num_worker: int
+
+
+@dataclass(frozen=True)
+class ModelPromoteConfig:
+      root_dir: Path
+      x_test: Path
+      y_test: Path
